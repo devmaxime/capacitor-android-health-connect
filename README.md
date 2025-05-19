@@ -57,6 +57,62 @@ You also need to add permissions for the records you want to read and/or write t
 <uses-permission android:name="android.permission.health.WRITE_EXERCISE"/>
 ```
 
+## Installation with npm
+
+To install the plugin using npm, follow these steps:
+
+1. Run the following command to install the plugin:
+
+```bash
+npm install @sprintwerk/capacitor-android-health-connect@alpha
+```
+
+2. After the installation is complete, run the following command to sync the plugin with Capacitor:
+
+```bash
+npx cap sync
+```
+
+3. Add the necessary configurations to your `AndroidManifest.xml` file:
+
+```xml
+<queries>
+   <package android:name="com.google.android.apps.healthdata" />
+</queries>
+
+<application>
+...
+    <activity>
+    ...
+
+        <!-- Permission handling for Android 13 and before -->
+        <intent-filter>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        </intent-filter>
+
+        <!-- Permission handling for Android 14 and later -->
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
+            <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+        </intent-filter>
+
+    ...
+    </activity>
+</application>
+```
+
+### Permissions
+
+You also need to add permissions for the records you want to read and/or write to the AndroidManifest.xml. A complete list of available records and the corresponding permissions can be found [here](https://developer.android.com/health-and-fitness/guides/health-connect/plan/data-types#permissions).
+
+```xml
+<!-- Example permissions -->
+<uses-permission android:name="android.permission.health.READ_STEPS"/>
+<uses-permission android:name="android.permission.health.WRITE_STEPS"/>
+<uses-permission android:name="android.permission.health.READ_EXERCISE"/>
+<uses-permission android:name="android.permission.health.WRITE_EXERCISE"/>
+```
+
 ## API
 
 <docgen-index>

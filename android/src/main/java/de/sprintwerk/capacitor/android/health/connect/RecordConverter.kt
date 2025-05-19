@@ -9,6 +9,7 @@ import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.ExerciseSegment
 import androidx.health.connect.client.records.ExerciseLap
 import androidx.health.connect.client.records.ExerciseRoute
+import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.records.metadata.Device
 
@@ -61,6 +62,17 @@ fun convertRecordToJson(record: Record): Any {
             obj.put("zoneOffset", record.zoneOffset?.toString() ?: "")
             obj.put("value", record.weight.inKilograms)
             obj.put("unit", "kg")
+            obj.put("metadata", convertMetadataToJson(record.metadata))
+            obj
+        }
+        is SleepSessionRecord -> {
+            val obj = JSObject()
+            obj.put("startTime", record.startTime.toString())
+            obj.put("startZoneOffset", record.startZoneOffset?.toString() ?: "")
+            obj.put("endTime", record.endTime.toString())
+            obj.put("endZoneOffset", record.endZoneOffset?.toString() ?: "")
+            obj.put("title", record.title ?: "")
+            obj.put("notes", record.notes ?: "")
             obj.put("metadata", convertMetadataToJson(record.metadata))
             obj
         }
